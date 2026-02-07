@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Report Hub is a static website that serves as a dashboard for sports briefings and analysis reports. It uses a manifest-driven architecture where a single JSON file (`manifest.json`) defines all site content and metadata. The dashboard (`index.html`) fetches this manifest at runtime and renders filterable report cards that link to individual static HTML report pages.
+Report Hub is a static website that serves as a dashboard for sports briefings and analysis reports. It uses a manifest-driven architecture where a single JSON file (`manifest.json`) defines all site content and metadata. The dashboard (`index.html`) fetches this manifest at runtime and renders report cards that link to individual static HTML report pages.
 
 ## Tech Stack
 
@@ -42,8 +42,7 @@ Report Hub is a static website that serves as a dashboard for sports briefings a
 ### Dashboard (`index.html`)
 
 - Fetches `/manifest.json` on page load
-- Renders filter pills from `topics` (plus an "All" pill)
-- Renders report cards sorted by date (newest first), filtered by active topic
+- Renders all report cards sorted by date (newest first)
 - Uses DOM manipulation with `innerHTML` and template literals — no virtual DOM
 
 ### Report Pages (`reports/*.html`)
