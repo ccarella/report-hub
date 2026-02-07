@@ -12,7 +12,6 @@
       <h1 id="site-title">Report Hub</h1>
       <p id="site-subtitle">Briefings and reports from OpenClaw</p>
     </header>
-    <div class="filters" id="filters"></div>
     <div class="report-cards" id="cards"></div>
   </main>
   <script>
@@ -20,18 +19,7 @@
       document.getElementById('site-title').textContent = m.site.title;
       document.getElementById('site-subtitle').textContent = m.site.subtitle;
 
-      const filters = document.getElementById('filters');
       const cards = document.getElementById('cards');
-      const topics = Object.entries(m.topics);
-      let active = 'all';
-
-      function pill(key, label) {
-        const b = document.createElement('button');
-        b.className = 'filter-pill' + (key === active ? ' active' : '');
-        b.textContent = label;
-        b.onclick = () => { active = key; render(); };
-        return b;
-      }
 
       function formatDate(iso) {
         const d = new Date(iso + 'T12:00:00');
@@ -39,19 +27,14 @@
       }
 
       function render() {
-        filters.innerHTML = '';
-        filters.appendChild(pill('all', 'All'));
-        topics.forEach(([k, v]) => filters.appendChild(pill(k, v.name)));
-
         const sorted = [...m.reports].sort((a, b) => b.date.localeCompare(a.date));
-        const filtered = active === 'all' ? sorted : sorted.filter(r => r.topic === active);
 
-        if (!filtered.length) {
+        if (!sorted.length) {
           cards.innerHTML = '<div class="empty-state">No reports yet.</div>';
           return;
         }
 
-        cards.innerHTML = filtered.map(r => {
+        cards.innerHTML = sorted.map(r => {
           const topic = m.topics[r.topic] || {};
           const type = m.reportTypes[r.type] || {};
           return `<a class="card" href="/${r.file}">
