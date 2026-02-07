@@ -1,0 +1,252 @@
+:root {
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+  background: #ffffff;
+  color: #111111;
+  line-height: 1.6;
+  padding: 1.25rem;
+}
+
+main {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+a {
+  color: #0055cc;
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  text-decoration: underline;
+}
+
+/* ── Dashboard ── */
+
+.site-header {
+  margin-bottom: 2rem;
+}
+
+.site-header h1 {
+  font-size: 1.5rem;
+  margin-bottom: 0.15rem;
+}
+
+.site-header p {
+  font-size: 0.9rem;
+  color: #666666;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.filter-pill {
+  display: inline-block;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  border: 1.5px solid #dddddd;
+  background: #ffffff;
+  color: #444444;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.filter-pill:hover {
+  border-color: #999999;
+}
+
+.filter-pill.active {
+  background: #111111;
+  color: #ffffff;
+  border-color: #111111;
+}
+
+.report-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.card {
+  display: block;
+  padding: 1rem 1.15rem;
+  border: 1.5px solid #eeeeee;
+  border-radius: 10px;
+  color: inherit;
+  transition: border-color 0.15s ease;
+}
+
+.card:hover,
+.card:focus {
+  text-decoration: none;
+  border-color: #cccccc;
+}
+
+.card-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+  font-size: 0.8rem;
+}
+
+.card-date {
+  color: #666666;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.1rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  background: #f0f0f0;
+  color: #555555;
+}
+
+.badge-topic {
+  color: #ffffff;
+}
+
+.card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+.card-excerpt {
+  font-size: 0.9rem;
+  color: #555555;
+  line-height: 1.5;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #999999;
+  font-size: 0.95rem;
+}
+
+/* ── Report Pages ── */
+
+.report-nav {
+  margin-bottom: 1.5rem;
+}
+
+.report-nav a {
+  font-size: 0.9rem;
+  color: #666666;
+}
+
+.report-nav a:hover {
+  color: #111111;
+}
+
+.report-header {
+  margin-bottom: 1.75rem;
+}
+
+.report-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.report-type {
+  display: inline-block;
+  padding: 0.1rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  background: #f0f0f0;
+  color: #555555;
+}
+
+.report-topic {
+  font-size: 0.82rem;
+  color: #666666;
+}
+
+.report-header h1 {
+  font-size: 1.6rem;
+  margin-bottom: 0.25rem;
+  line-height: 1.25;
+}
+
+.report-header .date {
+  font-size: 0.9rem;
+  color: #666666;
+  display: block;
+}
+
+.report-body p {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.report-body a {
+  color: #0055cc;
+}
+
+.highlights {
+  margin: 0 0 1.75rem;
+  padding: 0.75rem 1rem 0.75rem 1.75rem;
+  background: #fafafa;
+  border-radius: 8px;
+  border-left: 3px solid #e0e0e0;
+}
+
+.highlights li {
+  margin-bottom: 0.4rem;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: #333333;
+}
+
+.highlights li:last-child {
+  margin-bottom: 0;
+}
+
+/* ── Responsive ── */
+
+@media (min-width: 768px) {
+  body {
+    padding: 2.5rem 1.5rem;
+  }
+
+  .site-header h1 {
+    font-size: 1.75rem;
+  }
+
+  .report-header h1 {
+    font-size: 2rem;
+  }
+
+  .report-body p {
+    font-size: 1.05rem;
+  }
+
+  .card-title {
+    font-size: 1.2rem;
+  }
+}

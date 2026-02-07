@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Report Hub</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main>
+    <header class="site-header">
+      <h1 id="site-title">Report Hub</h1>
+      <p id="site-subtitle">Briefings and reports from OpenClaw</p>
+    </header>
+    <div class="filters" id="filters"></div>
+    <div class="report-cards" id="cards"></div>
+  </main>
+  <script>
+    fetch('/manifest.json').then(r => r.json()).then(m => {
+      document.getElementById('site-title').textContent = m.site.title;
+      document.getElementById('site-subtitle').textContent = m.site.subtitle;
+
+      const filters = document.getElementById('filters');
+      const cards = document.getElementById('cards');
+      const topics = Object.entries(m.topics);
+      let active = 'all';
+
+      function pill(key, label) {
+        const b = document.createElement('button');
+        b.className = 'filter-pill' + (key === active ? ' active' : '');
+        b.textContent = label;
+        b.onclick = () => { active = key; render(); };
+        return b;
+      }
+
+      function formatDate(iso) {
+        const d = new Date(iso + 'T12:00:00');
+        return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+      }
+
+      function render() {
+        filters.innerHTML = '';
+        filters.appendChild(pill('all', 'All'));
+        topics.forEach(([k, v]) => filters.appendChild(pill(k, v.name)));
+
+        const sorted = [...m.reports].sort((a, b) => b.date.localeCompare(a.date));
+        const filtered = active === 'all' ? sorted : sorted.filter(r => r.topic === active);
+
+        if (!filtered.length) {
+          cards.innerHTML = '<div class="empty-state">No reports yet.</div>';
+          return;
+        }
+
+        cards.innerHTML = filtered.map(r => {
+          const topic = m.topics[r.topic] || {};
+          const type = m.reportTypes[r.type] || {};
+          return `<a class="card" href="/${r.file}">
+            <div class="card-meta">
+              <span class="card-date">${formatDate(r.date)}</span>
+              <span class="badge">${type.label || r.type}</span>
+              <span class="badge badge-topic" style="background:${topic.color || '#888'}">${topic.name || r.topic}</span>
+            </div>
+            <div class="card-title">${r.title}</div>
+            <div class="card-excerpt">${r.excerpt}</div>
+          </a>`;
+        }).join('');
+      }
+
+      render();
+    });
+  </script>
+</body>
+</html>

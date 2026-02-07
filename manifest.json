@@ -1,0 +1,52 @@
+{
+  "site": {
+    "title": "Report Hub",
+    "subtitle": "Briefings and reports from OpenClaw"
+  },
+  "topics": {
+    "barca": { "name": "FC Barcelona", "color": "#a50044" }
+  },
+  "reportTypes": {
+    "daily": { "label": "Daily Briefing" },
+    "prematch": { "label": "Pre-Match" },
+    "postmatch": { "label": "Post-Match" }
+  },
+  "reports": [
+    {
+      "id": "barca-postmatch-2026-02-07",
+      "topic": "barca",
+      "type": "postmatch",
+      "date": "2026-02-07",
+      "title": "Yamal and De Jong Steer Barca Past a Stubborn Mallorca",
+      "excerpt": "For seventy minutes this felt like a training exercise. Then Vedat Muriqi reminded everyone why you never switch off against a team with nothing to lose.",
+      "file": "reports/barca-postmatch-2026-02-07.html"
+    },
+    {
+      "id": "barca-prematch-2026-02-07",
+      "topic": "barca",
+      "type": "prematch",
+      "date": "2026-02-07",
+      "title": "Copa Semi-Final Preview: Atletico Madrid vs Barcelona",
+      "excerpt": "This is the fixture Barca have been building toward for weeks. The Copa del Rey semi-final first leg at the Metropolitano is the kind of game that defines seasons.",
+      "file": "reports/barca-prematch-2026-02-07.html"
+    },
+    {
+      "id": "barca-daily-2026-02-07",
+      "topic": "barca",
+      "type": "daily",
+      "date": "2026-02-07",
+      "title": "Flick's Rotation Gamble Pays Off as Barca Grind Past Mallorca",
+      "excerpt": "There are wins that feel like a celebration and wins that feel like clocking out of a shift. Last night's 2-1 over Mallorca was firmly the latter, and that's perfectly fine.",
+      "file": "reports/barca-daily-2026-02-07.html"
+    },
+    {
+      "id": "barca-daily-2026-02-06",
+      "topic": "barca",
+      "type": "daily",
+      "date": "2026-02-06",
+      "title": "Mallorca on the Horizon and Atleti Lose a Midfield Engine",
+      "excerpt": "Some days around Barca feel like the calm before a storm; today felt more like the moment you tighten your boots and walk into it on purpose.",
+      "file": "reports/barca-daily-2026-02-06.html"
+    }
+  ]
+}
