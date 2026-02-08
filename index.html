@@ -15,6 +15,12 @@
     <div class="report-cards" id="cards"></div>
   </main>
   <script>
+    function esc(s) {
+      const d = document.createElement('div');
+      d.textContent = s;
+      return d.innerHTML;
+    }
+
     fetch('/manifest.json').then(r => r.json()).then(m => {
       document.getElementById('site-title').textContent = m.site.title;
       document.getElementById('site-subtitle').textContent = m.site.subtitle;
@@ -37,19 +43,22 @@
         cards.innerHTML = sorted.map(r => {
           const topic = m.topics[r.topic] || {};
           const type = m.reportTypes[r.type] || {};
-          return `<a class="card" href="/${r.file}">
+          return `<a class="card" href="/${esc(r.file)}">
             <div class="card-meta">
               <span class="card-date">${formatDate(r.date)}</span>
-              <span class="badge">${type.label || r.type}</span>
-              <span class="badge badge-topic" style="background:${topic.color || '#888'}">${topic.name || r.topic}</span>
+              <span class="badge">${esc(type.label || r.type)}</span>
+              <span class="badge badge-topic" style="background:${esc(topic.color || '#888')}">${esc(topic.name || r.topic)}</span>
             </div>
-            <div class="card-title">${r.title}</div>
-            <div class="card-excerpt">${r.excerpt}</div>
+            <div class="card-title">${esc(r.title)}</div>
+            <div class="card-excerpt">${esc(r.excerpt)}</div>
           </a>`;
         }).join('');
       }
 
       render();
+    }).catch(() => {
+      document.getElementById('cards').innerHTML =
+        '<div class="empty-state">Failed to load reports. Try refreshing.</div>';
     });
   </script>
 </body>

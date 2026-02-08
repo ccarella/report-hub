@@ -23,6 +23,10 @@
     "creatine": {
       "name": "Creatine & Brain Health",
       "color": "#4b4ddb"
+    },
+    "x-openclaw": {
+      "name": "X / Twitter",
+      "color": "#1d9bf0"
     }
   },
   "reportTypes": {
@@ -43,9 +47,24 @@
     },
     "analysis": {
       "label": "Analysis"
+    },
+    "explainer": {
+      "label": "Explainer"
+    },
+    "review": {
+      "label": "Review"
     }
   },
   "reports": [
+    {
+      "id": "x-openclaw-explainer-2026-02-07",
+      "topic": "x-openclaw",
+      "type": "explainer",
+      "date": "2026-02-07",
+      "title": "Using X with OpenClaw: Skills, Agents, and a Daily Social Briefing Loop",
+      "excerpt": "Hooking X into OpenClaw is less about building a bot that lives on the platform and more about building yourself a private wire service.",
+      "file": "reports/x-openclaw-explainer-2026-02-07.html"
+    },
     {
       "id": "creatine-research-2026-02-07",
       "topic": "creatine",
