@@ -3,14 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Report Hub</title>
+  <title>Updates from Tex</title>
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
   <main>
     <header class="site-header">
-      <h1 id="site-title">Report Hub</h1>
-      <p id="site-subtitle">Briefings and reports from OpenClaw</p>
+      <h1 id="site-title">Updates from Tex</h1>
     </header>
     <div class="report-cards" id="cards"></div>
   </main>
@@ -23,7 +22,6 @@
 
     fetch('/manifest.json').then(r => r.json()).then(m => {
       document.getElementById('site-title').textContent = m.site.title;
-      document.getElementById('site-subtitle').textContent = m.site.subtitle;
 
       const cards = document.getElementById('cards');
 
@@ -45,7 +43,6 @@
           const type = m.reportTypes[r.type] || {};
           return `<a class="card" href="/${esc(r.file)}">
             <div class="card-meta">
-              <span class="badge badge-topic" style="background:${esc(topic.color || '#888')}">${esc(topic.name || r.topic)}</span>
               <span class="badge">${esc(type.label || r.type)}</span>
               <span class="card-date">${formatDate(r.date)}</span>
             </div>
