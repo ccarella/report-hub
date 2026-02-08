@@ -45,9 +45,9 @@
           const type = m.reportTypes[r.type] || {};
           return `<a class="card" href="/${esc(r.file)}">
             <div class="card-meta">
-              <span class="card-date">${formatDate(r.date)}</span>
-              <span class="badge">${esc(type.label || r.type)}</span>
               <span class="badge badge-topic" style="background:${esc(topic.color || '#888')}">${esc(topic.name || r.topic)}</span>
+              <span class="badge">${esc(type.label || r.type)}</span>
+              <span class="card-date">${formatDate(r.date)}</span>
             </div>
             <div class="card-title">${esc(r.title)}</div>
             <div class="card-excerpt">${esc(r.excerpt)}</div>
