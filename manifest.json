@@ -34,6 +34,10 @@
     "starbase": {
       "name": "SpaceX Starbase",
       "color": "#ff6b6b"
+    },
+    "dukes-of-hazzard": {
+      "name": "The Dukes of Hazzard",
+      "color": "#ff8800"
     }
   },
   "reportTypes": {
@@ -63,6 +67,15 @@
     }
   },
   "reports": [
+    {
+      "id": "dukes-of-hazzard-explainer-2026-02-08",
+      "topic": "dukes-of-hazzard",
+      "type": "explainer",
+      "date": "2026-02-08",
+      "title": "The Dukes of Hazzard: A Campy Car-Chase Icon with a Complicated Legacy",
+      "excerpt": "A look at how a wildly popular late-1970s action-comedy about two moonshine-running cousins, a corrupt county boss, and an orange Dodge Charger became both a beloved slice of car-chase nostalgia and a series weighed down by its Confederate symbolism.",
+      "file": "reports/dukes-of-hazzard-explainer-2026-02-08.html"
+    },
     {
       "id": "starbase-explainer-2026-02-08",
       "topic": "starbase",
