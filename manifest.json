@@ -4,14 +4,93 @@
     "subtitle": "Briefings and reports from OpenClaw"
   },
   "topics": {
-    "barca": { "name": "FC Barcelona", "color": "#a50044" }
+    "barca": {
+      "name": "FC Barcelona",
+      "color": "#a50044"
+    },
+    "anthropic": {
+      "name": "Anthropic",
+      "color": "#0b7285"
+    },
+    "winter-olympics": {
+      "name": "Winter Olympics",
+      "color": "#0055ff"
+    },
+    "astros": {
+      "name": "Houston Astros",
+      "color": "#f4911e"
+    },
+    "creatine": {
+      "name": "Creatine & Brain Health",
+      "color": "#4b4ddb"
+    }
   },
   "reportTypes": {
-    "daily": { "label": "Daily Briefing" },
-    "prematch": { "label": "Pre-Match" },
-    "postmatch": { "label": "Post-Match" }
+    "daily": {
+      "label": "Daily Briefing"
+    },
+    "prematch": {
+      "label": "Pre-Match"
+    },
+    "postmatch": {
+      "label": "Post-Match"
+    },
+    "research": {
+      "label": "Research"
+    },
+    "news": {
+      "label": "News"
+    },
+    "analysis": {
+      "label": "Analysis"
+    }
   },
   "reports": [
+    {
+      "id": "creatine-research-2026-02-07",
+      "topic": "creatine",
+      "type": "research",
+      "date": "2026-02-07",
+      "title": "The mental benefits of 5 g/day creatine — and whether you need it 7 days a week",
+      "excerpt": "Creatine’s cognitive story is one of small but real gains in short-term memory and reasoning, especially in older, stressed, or low-intake individuals, built on top of a generally safe 5 g/day dose that works best when taken consistently enough to keep brain creatine levels topped up.",
+      "file": "reports/creatine-research-2026-02-07.html"
+    },
+    {
+      "id": "astros-analysis-2026-02-07",
+      "topic": "astros",
+      "type": "analysis",
+      "date": "2026-02-07",
+      "title": "Houston Astros 2026 Season Outlook: Reload, Not Rebuild",
+      "excerpt": "After their first missed postseason since 2016, the Astros enter 2026 treating last year as a warning shot rather than a signal to rebuild, betting that better health and added pitching depth are enough to push them back into the AL West race.",
+      "file": "reports/astros-analysis-2026-02-07.html"
+    },
+    {
+      "id": "winter-olympics-news-2026-02-07",
+      "topic": "winter-olympics",
+      "type": "news",
+      "date": "2026-02-07",
+      "title": "Milano Cortina 2026: Italy Opens a New Era for the Winter Olympics",
+      "excerpt": "Milano Cortina 2026 has opened in Northern Italy, bringing the Winter Olympics back to the country while testing a more distributed, venue-light model for the Games.",
+      "file": "reports/winter-olympics-news-2026-02-07.html"
+    },
+    {
+      "id": "anthropic-research-2026-02-07",
+      "topic": "anthropic",
+      "type": "research",
+      "date": "2026-02-07",
+      "title": "Anthropic’s Claude 4.6: What It Is, What It Can Do, And Why It Matters",
+      "excerpt": "Claude 4.6 is Anthropic’s latest frontier model, designed to combine strong agentic capabilities in coding, tool use, and long-horizon reasoning with a safety-first development philosophy and explicit scaling commitments.",
+      "file": "reports/anthropic-research-2026-02-07.html"
+    },
+    {
+      "id": "barca-postmatch-2026-02-03",
+      "topic": "barca",
+      "type": "postmatch",
+      "date": "2026-02-03",
+      "title": "Lewandowski Brace Sends Barca Past Albacete in Copa Grind",
+      "excerpt": "There are Copa nights you remember for the football and Copa nights you remember because you simply got out alive. Barcelona’s 2–1 win away to Albacete firmly belongs in the second category, but that doesn’t make it any less valuable.",
+      "file": "reports/barca-postmatch-2026-02-03.html"
+    },
     {
       "id": "barca-postmatch-2026-02-07",
       "topic": "barca",

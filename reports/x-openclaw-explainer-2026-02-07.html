@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Using X with OpenClaw: Skills, Agents, and a Daily Social Briefing Loop</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main>
+    <nav class="report-nav"><a href="/">&larr; All Reports</a></nav>
+    <article>
+      <header class="report-header">
+        <div class="report-meta">
+          <span class="report-type">Explainer</span>
+          <span class="report-topic">X / Twitter</span>
+        </div>
+        <h1>Using X with OpenClaw: Skills, Agents, and a Daily Social Briefing Loop</h1>
+        <time class="date" datetime="2026-02-07">February 7, 2026</time>
+      </header>
+      <div class="report-body">
+        <ul class="highlights">
+          <li>OpenClaw can treat X as another datasource, using the bird CLI skill to read timelines, lists, and searches in a scriptable way.</li>
+          <li>The best pattern is an isolated "social-briefing" agent that runs on a schedule, fetches a fixed slice of your feeds, and produces a concise summary instead of a firehose.</li>
+          <li>Combining bird’s `home --following` and plain `home` timelines lets you blend signal (people you chose to follow) with discovery (For You) in a controlled, rate-limit-friendly way.</li>
+          <li>You can steer what the agent pays attention to with X lists, saved searches, and simple keyword filters before summarization.</li>
+          <li>For safety and vibes, it’s better to start read-only, log what the agent is doing, and keep any posting or DMs explicitly human-triggered.</li>
+          <li>Once the foundations are in place, the same pattern extends to topic briefs ("AI safety", "Barça", "Olympics") and cross-network digests that include RSS, YouTube, and X in one report.</li>
+        </ul>
+        <p>Hooking X into OpenClaw is less about building a bot that lives on the platform and more about building yourself a private wire service. Instead of doomscrolling, you get a short, opinionated digest of what the people you care about are talking about, pulled for you by an agent that knows how to read your feeds, respect rate limits, and write in your preferred style.</p>
+        <p>The core building block for X in this setup is the <code>bird</code> skill. Bird is a fast X/Twitter CLI that uses your browser cookies to authenticate and exposes most of the reading surface you care about: home timelines (For You and Following), user timelines, lists, bookmarks, likes, search, and trending news. Inside OpenClaw, that gives the agent a scriptable handle on your social graph without having to fight the web UI or maintain brittle scraping code.</p>
+        <p>From there, the pattern that works best is to dedicate a single isolated agent session to social briefings. That agent owns the job of "check X, read a bounded amount, summarize" and runs either on a cron schedule (for example, every weekday at 7:30 AM) or on demand when you call it. By isolating it, you keep its context small and its behavior predictable, and you can let it evolve independently as your feeds and preferences change.</p>
+        <p>A simple but powerful loop looks like this. First, the agent uses bird to fetch a slice of your Following timeline, which is where the highest-signal posts live. Something like "last 100 tweets from home --following" gives you a working set that can be summarized in a few paragraphs. Next, it calls bird again to pull a smaller slice from the For You timeline, maybe the last 10–20 tweets, which often capture broader discourse and topics you wouldn’t see from following alone.</p>
+        <p>With those two inputs in hand, the agent doesn’t just summarize everything naively. It clusters posts by topic – for example, AI models, football, politics, and niche hobby stuff – and then decides which clusters are worth your attention. You can give it simple rules like "prioritize AI, Barça, and work-adjacent tech" and "collapse drama and celebrity news into one throwaway line unless it’s directly relevant." That turns a noisy stream into a structured brief that feels more like a well-edited newsletter.</p>
+        <p>Lists and saved searches add another layer of control. If you maintain an X list for "must-read" accounts, the agent can pull from that first and always surface those voices at the top of the summary. Saved searches like "(AI OR artificial intelligence) langchain" or "FC Barcelona" can be run ad hoc to generate topic-specific briefs. In OpenClaw terms, those become parameters the agent can toggle: one run might be a general daily briefing; another might be an AI-only recap.</p>
+        <p>On the OpenClaw side, the glue is a combination of cron jobs and skills. A cron job triggers the isolated social-briefing agent at the right time, passing a short system message that tells it exactly what to do: call bird with these commands, respect this limit on number of tweets, and produce a summary in a specific format. The bird skill handles the X-side complexity (cookies, pagination, rate limits) and returns plain JSON or text that the agent can then digest. The final output can be routed to iMessage, stored as a Report Hub article, or both.</p>
+        <p>Because X is a live social network with real reputational stakes, the safest default is to keep the agent read-only at first. Bird supports tweeting, replying, and following from the CLI, but wiring those into an autonomous loop is a good way to generate surprising behavior. A better pattern is to have the agent draft potential posts based on what it sees – for example, "here are three tweets you might want to send about today’s AI news" – and then let you choose which, if any, to publish manually from your phone or laptop.</p>
+        <p>Another practical concern is logging and transparency. Every time the agent runs, it should write down which bird commands it executed, how many tweets it processed from each source, and a few representative examples in case you want to audit or debug. That way, if the summary ever feels off, you can check whether the issue is in what X delivered, how bird fetched it, or how the model interpreted it.</p>
+        <p>Once this basic loop is in place, it becomes a template. You can spin up variants that focus on specific verticals (AI, sports, finance), combine X with RSS feeds and YouTube transcripts, or use Report Hub as a long-term archive of the best digests. Over time, your social-briefing agent becomes less of a toy and more of a personalized wire: a quiet service that reads the chaos for you, then shows up with just enough context to keep you informed without stealing your morning.</p>
+        <p>The key is to start small: a scheduled agent, a couple of bird commands, and a tight summary format. From there, you can layer in complexity as you learn what you actually care about seeing in your feed, and let OpenClaw handle the repetition in the background.</p>
+      </div>
+    </article>
+  </main>
+</body>
+</html>
