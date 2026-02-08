@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Background (matches site --color-bg) -->
+  <rect width="512" height="512" fill="#fafaf2"/>
+
+  <!-- === HARDHAT === -->
+  <!-- Dome -->
+  <path d="M172 222 Q172 148 256 148 Q340 148 340 222 Z" fill="#e6b44c"/>
+  <!-- Band -->
+  <rect x="182" y="196" width="148" height="20" rx="3" fill="#c69530"/>
+  <!-- Brim -->
+  <rect x="148" y="222" width="216" height="22" rx="5" fill="#d4a03c"/>
+  <!-- Top nub -->
+  <rect x="243" y="136" width="26" height="16" rx="5" fill="#d4a03c"/>
+
+  <!-- === OPEN BOOK === -->
+  <!-- Left page -->
+  <path d="M252 310 L162 296 L162 390 L252 400 Z" fill="#f0ebe0" stroke="#3d3d3d" stroke-width="5" stroke-linejoin="round"/>
+  <!-- Right page -->
+  <path d="M260 310 L350 296 L350 390 L260 400 Z" fill="#f0ebe0" stroke="#3d3d3d" stroke-width="5" stroke-linejoin="round"/>
+
+  <!-- Text lines — left page -->
+  <line x1="188" y1="324" x2="238" y2="330" stroke="#c8a55a" stroke-width="4" stroke-linecap="round"/>
+  <line x1="188" y1="344" x2="238" y2="350" stroke="#c8a55a" stroke-width="4" stroke-linecap="round"/>
+  <line x1="188" y1="364" x2="224" y2="368" stroke="#c8a55a" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- Text lines — right page -->
+  <line x1="324" y1="324" x2="274" y2="330" stroke="#c8a55a" stroke-width="4" stroke-linecap="round"/>
+  <line x1="324" y1="344" x2="274" y2="350" stroke="#c8a55a" stroke-width="4" stroke-linecap="round"/>
+  <line x1="324" y1="364" x2="288" y2="368" stroke="#c8a55a" stroke-width="4" stroke-linecap="round"/>
+</svg>
