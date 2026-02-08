@@ -23,6 +23,10 @@
       "name": "Creatine & Brain Health",
       "color": "#4b4ddb"
     },
+    "ai-industry": {
+      "name": "AI Industry",
+      "color": "#222244"
+    },
     "x-openclaw": {
       "name": "X / Twitter",
       "color": "#1d9bf0"
@@ -67,6 +71,15 @@
       "title": "Planning a Family Trip from Houston to SpaceX Starbase",
       "excerpt": "A practical guide to turning a long-weekend road trip from Houston into a flexible, kid-friendly visit to SpaceX’s Starbase site, with South Padre Island as your home base and any Starship launch as a very memorable bonus.",
       "file": "reports/starbase-explainer-2026-02-08.html"
+    },
+    {
+      "id": "ai-industry-daily-2026-02-08",
+      "topic": "ai-industry",
+      "type": "daily",
+      "date": "2026-02-08",
+      "title": "Agentic AI Platforms Step Into the Spotlight",
+      "excerpt": "Anthropic, OpenAI, and new consumer players all pushed agentic AI forward this weekend, turning agents from a buzzword into a concrete platform strategy across enterprise, consumer, and data licensing.",
+      "file": "reports/ai-industry-daily-2026-02-08.html"
     },
     {
       "id": "x-openclaw-explainer-2026-02-07",
