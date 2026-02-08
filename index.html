@@ -4,9 +4,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Updates from Tex</title>
+  <meta name="theme-color" content="#fafaf2">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Tex Reports">
+  <link rel="manifest" href="/app.webmanifest">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+  <div class="pull-refresh" id="pull-refresh" aria-hidden="true">
+    <div class="pull-refresh-spinner"></div>
+    <span class="pull-refresh-text">Pull to refresh</span>
+  </div>
   <main>
     <header class="site-header">
       <h1 id="site-title">Updates from Tex</h1>
@@ -15,70 +25,155 @@
     <div class="report-cards" id="cards"></div>
   </main>
   <script>
+    // — Apple touch icon: render SVG to canvas → PNG —
+    (function () {
+      var img = new Image();
+      img.onload = function () {
+        var c = document.createElement('canvas');
+        c.width = 180; c.height = 180;
+        var ctx = c.getContext('2d');
+        ctx.drawImage(img, 0, 0, 180, 180);
+        var link = document.createElement('link');
+        link.rel = 'apple-touch-icon';
+        link.href = c.toDataURL('image/png');
+        document.head.appendChild(link);
+      };
+      img.src = '/icon.svg';
+    })();
+
+    // — Service Worker —
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js');
+    }
+
+    // — App —
     function esc(s) {
-      const d = document.createElement('div');
+      var d = document.createElement('div');
       d.textContent = s;
       return d.innerHTML;
     }
 
-    fetch('/manifest.json').then(r => r.json()).then(m => {
-      document.getElementById('site-title').textContent = m.site.title;
+    var manifest;
+    var cards = document.getElementById('cards');
+    var searchInput = document.getElementById('search');
 
-      const cards = document.getElementById('cards');
-      const searchInput = document.getElementById('search');
+    function formatDate(iso) {
+      var d = new Date(iso + 'T12:00:00');
+      return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+    }
 
-      function formatDate(iso) {
-        const d = new Date(iso + 'T12:00:00');
-        return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+    function fuzzyMatch(report, query) {
+      if (!query) return true;
+      var topic = manifest.topics[report.topic] || {};
+      var type = manifest.reportTypes[report.type] || {};
+      var haystack = [
+        report.title,
+        report.excerpt,
+        topic.name || '',
+        type.label || ''
+      ].join(' ').toLowerCase();
+      var terms = query.toLowerCase().split(/\s+/).filter(Boolean);
+      return terms.every(function (t) { return haystack.includes(t); });
+    }
+
+    function render() {
+      var query = searchInput.value.trim();
+      var sorted = manifest.reports.slice()
+        .filter(function (r) { return fuzzyMatch(r, query); })
+        .sort(function (a, b) { return b.date.localeCompare(a.date); });
+
+      if (!sorted.length) {
+        cards.innerHTML = query
+          ? '<div class="empty-state">No reports match your search.</div>'
+          : '<div class="empty-state">No reports yet.</div>';
+        return;
       }
 
-      function fuzzyMatch(report, query) {
-        if (!query) return true;
-        const topic = m.topics[report.topic] || {};
-        const type = m.reportTypes[report.type] || {};
-        const haystack = [
-          report.title,
-          report.excerpt,
-          topic.name || '',
-          type.label || ''
-        ].join(' ').toLowerCase();
-        const terms = query.toLowerCase().split(/\s+/).filter(Boolean);
-        return terms.every(term => haystack.includes(term));
-      }
+      cards.innerHTML = sorted.map(function (r) {
+        var topic = manifest.topics[r.topic] || {};
+        var type = manifest.reportTypes[r.type] || {};
+        return '<a class="card" href="/' + esc(r.file) + '">'
+          + '<div class="card-meta">'
+          + '<span class="badge">' + esc(type.label || r.type) + '</span>'
+          + '<span class="card-date">' + formatDate(r.date) + '</span>'
+          + '</div>'
+          + '<div class="card-title">' + esc(r.title) + '</div>'
+          + '<div class="card-excerpt">' + esc(r.excerpt) + '</div>'
+          + '</a>';
+      }).join('');
+    }
 
-      function render() {
-        const query = searchInput.value.trim();
-        const sorted = [...m.reports]
-          .filter(r => fuzzyMatch(r, query))
-          .sort((a, b) => b.date.localeCompare(a.date));
+    function loadManifest() {
+      return fetch('/manifest.json').then(function (r) { return r.json(); }).then(function (m) {
+        manifest = m;
+        document.getElementById('site-title').textContent = m.site.title;
+        render();
+      });
+    }
 
-        if (!sorted.length) {
-          cards.innerHTML = query
-            ? '<div class="empty-state">No reports match your search.</div>'
-            : '<div class="empty-state">No reports yet.</div>';
-          return;
-        }
-
-        cards.innerHTML = sorted.map(r => {
-          const topic = m.topics[r.topic] || {};
-          const type = m.reportTypes[r.type] || {};
-          return `<a class="card" href="/${esc(r.file)}">
-            <div class="card-meta">
-              <span class="badge">${esc(type.label || r.type)}</span>
-              <span class="card-date">${formatDate(r.date)}</span>
-            </div>
-            <div class="card-title">${esc(r.title)}</div>
-            <div class="card-excerpt">${esc(r.excerpt)}</div>
-          </a>`;
-        }).join('');
-      }
-
-      searchInput.addEventListener('input', render);
-      render();
-    }).catch(() => {
-      document.getElementById('cards').innerHTML =
-        '<div class="empty-state">Failed to load reports. Try refreshing.</div>';
+    searchInput.addEventListener('input', function () {
+      if (manifest) render();
     });
+
+    loadManifest().catch(function () {
+      cards.innerHTML = '<div class="empty-state">Failed to load reports. Try refreshing.</div>';
+    });
+
+    // — Pull to refresh —
+    (function () {
+      var pr = document.getElementById('pull-refresh');
+      var text = pr.querySelector('.pull-refresh-text');
+      var startY = 0;
+      var pulling = false;
+      var refreshing = false;
+      var THRESHOLD = 80;
+
+      document.addEventListener('touchstart', function (e) {
+        if (refreshing) return;
+        if (window.scrollY === 0) {
+          startY = e.touches[0].clientY;
+          pulling = true;
+        }
+      }, { passive: true });
+
+      document.addEventListener('touchmove', function (e) {
+        if (!pulling || refreshing) return;
+        var dy = e.touches[0].clientY - startY;
+        if (dy > 0 && window.scrollY === 0) {
+          var dist = Math.min(dy * 0.5, 70);
+          var progress = Math.min(dy / THRESHOLD, 1);
+          pr.style.transform = 'translateY(' + dist + 'px)';
+          pr.style.opacity = progress;
+          text.textContent = dy > THRESHOLD ? 'Release to refresh' : 'Pull to refresh';
+        }
+      }, { passive: true });
+
+      document.addEventListener('touchend', function () {
+        if (!pulling || refreshing) { pulling = false; return; }
+        var dy = parseInt(pr.style.transform.replace(/[^0-9.]/g, '')) || 0;
+
+        if (dy >= THRESHOLD * 0.5) {
+          refreshing = true;
+          text.textContent = 'Refreshing\u2026';
+          pr.classList.add('refreshing');
+          pr.style.transform = 'translateY(48px)';
+          pr.style.opacity = '1';
+
+          loadManifest()
+            .catch(function () {})
+            .then(function () {
+              refreshing = false;
+              pr.classList.remove('refreshing');
+              pr.style.transform = '';
+              pr.style.opacity = '0';
+            });
+        } else {
+          pr.style.transform = '';
+          pr.style.opacity = '0';
+        }
+        pulling = false;
+      }, { passive: true });
+    })();
   </script>
 </body>
 </html>

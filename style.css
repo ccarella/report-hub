@@ -1,6 +1,52 @@
 /* ── Fonts ── */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap');
 
+/* ── Pull to Refresh ── */
+
+html {
+  overscroll-behavior-y: contain;
+}
+
+.pull-refresh {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px;
+  transform: translateY(-60px);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.2s ease;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.pull-refresh-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2.5px solid #c8a55a;
+  border-top-color: transparent;
+  border-radius: 50%;
+}
+
+.pull-refresh.refreshing .pull-refresh-spinner {
+  animation: ptr-spin 0.6s linear infinite;
+}
+
+@keyframes ptr-spin {
+  to { transform: rotate(360deg); }
+}
+
+.pull-refresh-text {
+  font-family: var(--font-body, system-ui, sans-serif);
+  font-size: 0.8rem;
+  color: #6b6b6b;
+  letter-spacing: 0.02em;
+}
+
 /* ── Reset & Base ── */
 :root {
   color-scheme: light;

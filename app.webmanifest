@@ -1,0 +1,16 @@
+{
+  "name": "Updates from Tex",
+  "short_name": "Tex Reports",
+  "description": "Sports briefings and analysis reports from Tex",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fafaf2",
+  "theme_color": "#fafaf2",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    }
+  ]
+}
