@@ -10,6 +10,7 @@
   <main>
     <header class="site-header">
       <h1 id="site-title">Updates from Tex</h1>
+      <input type="search" id="search" class="search-input" placeholder="Search reports…" autocomplete="off">
     </header>
     <div class="report-cards" id="cards"></div>
   </main>
@@ -24,17 +25,37 @@
       document.getElementById('site-title').textContent = m.site.title;
 
       const cards = document.getElementById('cards');
+      const searchInput = document.getElementById('search');
 
       function formatDate(iso) {
         const d = new Date(iso + 'T12:00:00');
         return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
       }
 
+      function fuzzyMatch(report, query) {
+        if (!query) return true;
+        const topic = m.topics[report.topic] || {};
+        const type = m.reportTypes[report.type] || {};
+        const haystack = [
+          report.title,
+          report.excerpt,
+          topic.name || '',
+          type.label || ''
+        ].join(' ').toLowerCase();
+        const terms = query.toLowerCase().split(/\s+/).filter(Boolean);
+        return terms.every(term => haystack.includes(term));
+      }
+
       function render() {
-        const sorted = [...m.reports].sort((a, b) => b.date.localeCompare(a.date));
+        const query = searchInput.value.trim();
+        const sorted = [...m.reports]
+          .filter(r => fuzzyMatch(r, query))
+          .sort((a, b) => b.date.localeCompare(a.date));
 
         if (!sorted.length) {
-          cards.innerHTML = '<div class="empty-state">No reports yet.</div>';
+          cards.innerHTML = query
+            ? '<div class="empty-state">No reports match your search.</div>'
+            : '<div class="empty-state">No reports yet.</div>';
           return;
         }
 
@@ -52,6 +73,7 @@
         }).join('');
       }
 
+      searchInput.addEventListener('input', render);
       render();
     }).catch(() => {
       document.getElementById('cards').innerHTML =
