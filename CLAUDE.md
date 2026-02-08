@@ -78,6 +78,7 @@ Report IDs in `manifest.json` match the filename without extension:
 2. Add a corresponding entry to the `reports` array in `manifest.json` with all required fields (`id`, `topic`, `type`, `date`, `title`, `excerpt`, `file`)
 3. If introducing a new topic, add it to `manifest.json` under `topics` with a `name` and `color`
 4. If introducing a new report type, add it under `reportTypes` with a `label`
+5. **CRITICAL: Use only ASCII in manifest.json.** Replace smart quotes (`'` `'` `"` `"`) with straight quotes, em/en dashes (`—` `–`) with `--` or `-`. Control characters (0x00-0x1F) in JSON strings will break the dashboard. After editing, validate with `python3 -c "import json; json.load(open('manifest.json')); print('OK')"`
 
 ### Report HTML Template
 
