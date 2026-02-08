@@ -26,6 +26,10 @@
     "x-openclaw": {
       "name": "X / Twitter",
       "color": "#1d9bf0"
+    },
+    "starbase": {
+      "name": "SpaceX Starbase",
+      "color": "#ff6b6b"
     }
   },
   "reportTypes": {
@@ -55,6 +59,15 @@
     }
   },
   "reports": [
+    {
+      "id": "starbase-explainer-2026-02-08",
+      "topic": "starbase",
+      "type": "explainer",
+      "date": "2026-02-08",
+      "title": "Planning a Family Trip from Houston to SpaceX Starbase",
+      "excerpt": "A practical guide to turning a long-weekend road trip from Houston into a flexible, kid-friendly visit to SpaceX’s Starbase site, with South Padre Island as your home base and any Starship launch as a very memorable bonus.",
+      "file": "reports/starbase-explainer-2026-02-08.html"
+    },
     {
       "id": "x-openclaw-explainer-2026-02-07",
       "topic": "x-openclaw",
